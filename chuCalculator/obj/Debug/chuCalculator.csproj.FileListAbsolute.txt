@@ -1,0 +1,10 @@
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\bin\Debug\chuCalculator.exe.config
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\bin\Debug\chuCalculator.exe
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\bin\Debug\chuCalculator.pdb
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\obj\Debug\chuCalculator.csprojResolveAssemblyReference.cache
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\obj\Debug\chuCalculator.Properties.Resources.resources
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\obj\Debug\chuCalculator.csproj.GenerateResource.Cache
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\obj\Debug\chuCalculator.exe
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\obj\Debug\chuCalculator.pdb
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\obj\Debug\chuCalculator.Calculator.resources
+C:\Users\ParkerGateway2\Desktop\chuCalculator\chuCalculator\obj\Debug\chuCalculator.valuePopup.resources
