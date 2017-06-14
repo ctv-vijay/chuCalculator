@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Chu Calculator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<script>
+function getPump(pump) {
+	var freq = document.getElementById("frequency").value;
+	var density = document.getElementById("fluid_density").value;
+	var npshrft = (pump * Math.pow(((freq * 30.0)/1800.0), 1.5)) + 0.5;
+	var npshrps = (npshrft * 32.2 * density) / 144.0;
+    document.getElementById("result").innerHTML = npshrft;
+}
+</script>
+
+  
+
+<h3>Parker Flow Predictor</h3><hr>
+
+<div class="col-xs-12 col-sm-4">
+	<h4> Fluid Data</h4>
+	<div class="form-group">
+		<label for="fluid">Pick a fluid:</label>
+		<input type="text" class="form-control" id="fluid">
+	</div>
+	<div class="form-group">
+		<label for="Fluid Density">Fluid Density:</label>
+		<input type="text" class="form-control" id="fluid_density">
+	</div>
+	<div class="form-group">
+		<label for="kViscosity">Kinematic Viscosity:</label>
+		<input type="text" class="form-control" id="kViscosity">
+	</div>
+	<div class="form-group">
+		<label for="Temperature">Temperature</label>
+		<input type="text" class="form-control" id="temperature">
+	</div>
+	<div class="form-group">
+		<label for="RVP">RVP</label>
+		<input type="text" class="form-control" id="RVP">
+	</div>
+</div>
+<div class="col-xs-12 col-sm-4">
+	<h4> Pump Options</h4>
+	<div class="radio">
+	  <label><input type="radio" name="pumps" onclick="getPump(this.value)" value = 7 >3" Pump</label>
+	</div>
+	<div class="radio">
+	  <label><input type="radio" name="pumps" onclick="getPump(this.value)" value = 3>3" RVP Pump</label>
+	</div>
+	<div class="radio">
+	  <label><input type="radio" name="pumps" onclick="getPump(this.value)" value = 8.5>4"Pump</label>
+	</div>
+	<div class="form-group">
+		<label for="frequency">Pump Frequency</label>
+		<input type="text" class="form-control" id="frequency">
+	</div>
+
+	<!--
+	<div class="form-group">
+		<label for="dPressure">Discharge Pressure</label>
+		<input type="text" class="form-control" id="dPressure">
+	</div>
+	-->
+</div>
+
+<div class="col-xs-12 col-sm-4">
+	<h4> Static Head Data</h4>
+	<div class="form-group">
+		<label for="height">Height of fluid above pump centerline</label>
+		<input type="text" class="form-control" id="height">
+	</div>
+	<div class="form-group">
+		<label for="tPressure">Pressure in tank (psia)</label>
+		<input type="text" class="form-control" id="tPressure">
+	</div>
+	<div class="form-group">
+		<label for="atm">Atmospheric Pressure (psia)</label>
+		<input type="text" class="form-control" id="atm">
+	</div>
+</div>
+
+<div class="col-xs-12 col-sm-8">
+	<h4> Line Losses info</h4>
+	<div class="col-sm-4">
+		<label for="pDiam1">Diameter of Pipe 1</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="pLength1">Length of Pipe</label>
+			<input type="text" class="form-control" id="pLength1">
+		</div>
+	</div>
+	
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="roughness1">Roughness of Pipe</label>
+			<input type="text" class="form-control" id="roughness1">
+		</div>
+	</div>
+		<div class="col-sm-4">
+		<label for="pDiam">Diameter of Pipe 2</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="pLength2">Length of Pipe</label>
+			<input type="text" class="form-control" id="pLength2">
+		</div>
+	</div>
+	
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="roughness2">Roughness of Pipe</label>
+			<input type="text" class="form-control" id="roughness2">
+		</div>
+	</div>
+		<div class="col-sm-4">
+		<label for="pDiam3">Diameter of Pipe 3</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="pLength3">Length of Pipe</label>
+			<input type="text" class="form-control" id="pLength3">
+		</div>
+	</div>
+	
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="roughness3">Roughness of Pipe</label>
+			<input type="text" class="form-control" id="roughness3">
+		</div>
+	</div>
+
+</div>
+
+<div class="col-xs-12 col-sm-8">
+	<h4> Fixtures info</h4>
+	<div class="col-sm-4">
+		<label for="fType1">Type of Fixture 1</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<label for="fDiam1">Diameter of Fixture 1</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="fNum1">Number of Fixtures 1</label>
+			<input type="text" class="form-control" id="fNum1">
+		</div>
+	</div>
+	
+		<div class="col-sm-4">
+		<label for="fType2">Type of Fixture 2</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<label for="fDiam2">Diameter of Fixture 2</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="fNum1">Number of Fixtures 2</label>
+			<input type="text" class="form-control" id="fNum2">
+		</div>
+	</div>
+		<div class="col-sm-4">
+		<label for="fType3">Type of Fixture 3</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<label for="fDiam3">Diameter of Fixture 3</label><br>
+		<select class="selectpicker col-sm-12" style="height: 4.5ex">
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>6</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group">
+			<label for="fNum3">Number of Fixtures 3</label>
+			<input type="text" class="form-control" id="fNum3">
+		</div>
+	</div>
+</div>
+
+
+
+<div class="col-xs-12">
+	<h3>Answer</h3>
+	<p id="result"></p>
+</div>
+
+</body>
+</html>
