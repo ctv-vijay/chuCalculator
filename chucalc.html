@@ -9,19 +9,38 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <style>
   	#header{
-  		text-align: center;
   		background-color: rgb(255, 185, 29);
   		font-weight: bold;
+  		color: black;
+  		size: fixed;
+  	}
+  	#transparentBack{
+  		background-color: white;
   	}
   	body{
-  		background-color: rgb(165,160,149);
   		color: black;
   	}
+  	h4{
+  		font-weight: bold;
+  		text-decoration: underline;
+  	}
+  	img{
+  		padding: 0.3ex;
+  		max-height: 319px;
+  		max-width: 120px;
+  	}
+
   </style>
 </head>
 <body>
 <script>
-function getPump(pump) {
+function getPump() {
+	var height = $("#height").val();
+	var atm = $("#atm").val();
+	var tPressure = $("#tPressure").val();
+	var temperature = $("#temperature").val();
+	var RVP = $("#RVP").val();
+	var pump = $('input[name="pumps"]:checked').val();
 	var freq = document.getElementById("frequency").value;
 	var density = document.getElementById("fluid_density").value;
 	var npshrft = (pump * Math.pow(((freq * 30.0)/1800.0), 1.5)) + 0.5;
@@ -131,61 +150,75 @@ function getPump(pump) {
 	for(var i = 0; i < headVelocity.length; i++){
 		headLossF += kDiams[i] * headVelocity[i];
 	}
-	var headLossPsi = (headLossF * density * 32.2) / 144;
+	var headLossPsi = (headLossF * density * 32.2) / 144.0;
 
 	var totalHeadLossPsi = headLossPsi + BPressureDrop + SPressureDrop;
 
-	var pf
+	var staticHead = ((density * 32.2 * height)/144);
 
-    document.getElementById("result").innerHTML = headLossF;
+	var pfCalc = parseFloat(atm) + parseFloat(staticHead) - parseFloat(totalHeadLossPsi) - parseFloat(npshrps);
+
+	var TVP = RVP * Math.pow(Math.E,(-6622.5 * ((1/((temperature*1.8021)+459.69)) - (1/559.69)))) + (.04*RVP) + (.1 * 27);
+
+	var VL = (atm - pfCalc)/(pfCalc - TVP);
+
+	var VLratio = 1.0/(VL + 1);
+
+	var ans = q*VLratio;
+
+    document.getElementById("result").innerHTML = "ans: " + ans + " q: " + q + " VL: " + VL;
 }
 </script>
 
- <nav class="navbar navbar-default" id="header">
-  <div class="container-fluid" id="header">
-    <div class="navbar-header" id="header">
-      <h3 id = "header">Parker Flow Predictor</h3>
-    </div>
-  </div>
+<nav class="navbar navbar-default" id="header">
+	<div class="container-fluid" id="header">
+		<div class="navbar-header">
+			<a class="navbar-brand" id="header">Parker Flow Predictor</a>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+			<li><img src="logo.jpg"/></li>
+		</ul>
+	</div>
 </nav>
 
+
 <div class="col-xs-12 col-sm-6" id="boxed">
-	<h4> Fluid Data</h4>
+	<h4 class=> Fluid Data</h4>
 	<div class="form-group">
 		<label for="fluid">Pick a fluid:</label>
 		<input type="text" class="form-control" id="fluid">
 	</div>
 	<div class="form-group">
 		<label for="Fluid Density">Fluid Density:</label>
-		<input type="text" class="form-control" id="fluid_density">
+		<input type="text" class="form-control" id="fluid_density" value=1.4937>
 	</div>
 	<div class="form-group">
 		<label for="kViscosity">Kinematic Viscosity:</label>
-		<input type="text" class="form-control" id="kViscosity">
+		<input type="text" class="form-control" id="kViscosity" value=0.0000124>
 	</div>
 	<div class="form-group">
 		<label for="Temperature">Temperature</label>
-		<input type="text" class="form-control" id="temperature">
+		<input type="text" class="form-control" id="temperature" value=90>
 	</div>
 	<div class="form-group">
 		<label for="RVP">RVP</label>
-		<input type="text" class="form-control" id="RVP">
+		<input type="text" class="form-control" id="RVP" value=.1>
 	</div>
 </div>
 <div class="col-xs-12 col-sm-6" id="boxed">
 	<h4> Pump Options</h4>
 	<div class="radio">
-	  <label><input type="radio" name="pumps" onclick="getPump(this.value)" value = 7>3" Pump</label>
+	  <label><input type="radio" name="pumps" value = 7>3" Pump</label>
 	</div>
 	<div class="radio">
-	  <label><input type="radio" name="pumps" onclick="getPump(this.value)" value = 3>3" RVP Pump</label>
+	  <label><input type="radio" name="pumps" value = 3>3" RVP Pump</label>
 	</div>
 	<div class="radio">
-	  <label><input type="radio" name="pumps" onclick="getPump(this.value)" value = 8.5>4"Pump</label>
+	  <label><input type="radio" name="pumps" value = 8.5>4"Pump</label>
 	</div>
 	<div class="form-group">
 		<label for="frequency">Pump Frequency</label>
-		<input type="text" class="form-control" id="frequency">
+		<input type="text" class="form-control" id="frequency" value="40">
 	</div>
 
 	<!--
@@ -199,24 +232,24 @@ function getPump(pump) {
 <div class="col-xs-12 col-sm-6" id="boxed">
 	<h4> Static Head Data</h4>
 	<div class="form-group">
-		<label for="height">Height of fluid above pump centerline</label>
-		<input type="text" class="form-control" id="height">
+		<label for="height">Height of fluid above pump centerline (ft)</label>
+		<input type="text" class="form-control" id="height" value="3">
 	</div>
 	<div class="form-group">
 		<label for="tPressure">Pressure in tank (psia)</label>
-		<input type="text" class="form-control" id="tPressure">
+		<input type="text" class="form-control" id="tPressure" value="0">
 	</div>
 	<div class="form-group">
 		<label for="atm">Atmospheric Pressure (psia)</label>
-		<input type="text" class="form-control" id="atm">
+		<input type="text" class="form-control" id="atm" value="14.7">
 	</div>
 </div>
 <!--LINE LOSS PIPE 1 --> 
-<div class="col-xs-12 col-sm-8">
+<div class="col-xs-12 col-sm-8" id="boxed">
 	<h4> Line Losses info</h4>
 	<div class="col-sm-4">
 		<label for="pDiam1">Diameter of Pipe 1</label><br>
-		<select class="selectpicker col-sm-12" style="height: 4.5ex" id="pDiam1">
+		<select class="selectpicker col-sm-12" style="height: 4.5ex" id="pDiam1" value="3">
 		  <option>0</option>
 		  <option>2</option>
 		  <option>3</option>
@@ -227,14 +260,14 @@ function getPump(pump) {
 	<div class="col-sm-4">
 		<div class="form-group">
 			<label for="pLength1">Length of Pipe</label>
-			<input type="text" class="form-control" id="pLength1">
+			<input type="text" class="form-control" id="pLength1" value="3">
 		</div>
 	</div>
 	
 	<div class="col-sm-4">
 		<div class="form-group">
 			<label for="roughness1">Roughness of Pipe</label>
-			<input type="text" class="form-control" id="roughness1">
+			<input type="text" class="form-control" id="roughness1" value="0.012">
 		</div>
 	</div>
 <!--LINE LOSS PIPE 2 -->
@@ -356,7 +389,7 @@ function getPump(pump) {
 	</div>
 	<div class="col-sm-4">
 		<label for="fDiam1">Diameter of Fixture</label><br>
-		<select class="selectpicker col-sm-12" style="height: 4.5ex" id="fDiam1">
+		<select class="selectpicker col-sm-12" style="height: 4.5ex" id="fDiam1" value="3">
 		  <option>2</option>
 		  <option>3</option>
 		  <option>4</option>
@@ -366,7 +399,7 @@ function getPump(pump) {
 	<div class="col-sm-4">
 		<div class="form-group">
 			<label for="fNum1">Number of Fixtures</label>
-			<input type="text" class="form-control" id="fNum1">
+			<input type="text" class="form-control" id="fNum1" value="1">
 		</div>
 	</div>
 <!--FIXTURE 2 -->
@@ -683,10 +716,16 @@ function getPump(pump) {
 </div>
 
 
-
 <div class="col-xs-12">
 	<h3>Answer</h3>
-	<p id="result"></p>
+	<div class-"col-xs-6">
+		<button type="button" class="btn btn-default" onclick="getPump()">Calculate</button>
+	</div>
+
+	<div class-"col-xs-6">
+		<p id="result"></p>
+	</div>
+	
 </div>
 
 </body>
