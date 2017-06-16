@@ -29,6 +29,19 @@
   		max-height: 319px;
   		max-width: 120px;
   	}
+	#bottomSection{
+		background-color: rgb(165, 160, 149);
+		text-align: center;
+	}
+	#answerText{
+		font-weight: bold;
+	}
+	p{
+		border: 1px;
+		border-style: solid;
+		font-size: 200%;
+		background-color: white;
+	}
 
   </style>
 </head>
@@ -166,7 +179,8 @@ function getPump() {
 
 	var ans = q*VLratio;
 
-    document.getElementById("result").innerHTML = "ans: " + ans + " q: " + q + " VL: " + VL;
+    document.getElementById("result").innerHTML = ans + " GPM";
+	document.getElementById("result2").innerHTML = "V/L:  " + VL
 }
 </script>
 
@@ -682,6 +696,12 @@ function getPump() {
 			<input type="text" class="form-control" id="fNum6">
 		</div>
 	</div>
+	
+	<div class="col-xs-12">
+	test
+		<!-- Put the pics here bby-->
+	</div>
+	
 	<h4> Strainer info</h4>
 	<div class="col-sm-6">
 		<label for="sDiam">Strainer/Filter Diameter</label><br>
@@ -711,21 +731,28 @@ function getPump() {
 			<label for="bNum">Number of valves</label>
 			<input type="text" class="form-control" id="bNum">
 		</div>
+		<br>
+		<br>
 	</div>
 
 </div>
 
 
-<div class="col-xs-12">
-	<h3>Answer</h3>
-	<div class-"col-xs-6">
-		<button type="button" class="btn btn-default" onclick="getPump()">Calculate</button>
-	</div>
 
-	<div class-"col-xs-6">
-		<p id="result"></p>
-	</div>
-	
+<div class="col-xs-12" id = "bottomSection">
+	<h2 id = "answerText">CALCULATED VALUES</h2>
+	<br>
+	<div class="col-xs-12">
+		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-1">
+			<p id="result">XXX.XXXXXXX GPM</p>
+		</div>
+		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-2">
+			<p id="result2">V/L</p>
+		</div>
+	</div>	
+
+	<button type="button" class="btn btn-default" onclick="getPump()">Calculate</button>
+	<br><br>
 </div>
 
 </body>
